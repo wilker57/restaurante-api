@@ -1,0 +1,338 @@
+### GET Buscar Todos os Bairros
+GET http://localhost:8080/bairro
+
+### GET Buscar Bairro por Codigo
+GET http://localhost:8080/bairro/codigo/1
+
+### GET Buscar Bairro por Nome
+GET http://localhost:8080/bairro/nome/centro
+
+### POST Inserir Bairro
+POST http://localhost:8080/bairro
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nome": "Jardim Mariana",
+  "custoEntrega": 9
+}
+
+### PUT Alterar Bairro
+PUT http://localhost:8080/bairro
+Content-Type: application/json
+Accept: application/json
+
+{
+  "codigo": 4,
+  "nome": "Paiaguais",
+  "custoEntrega": 12
+}
+
+### DELETE Excluir Bairro
+DELETE http://localhost:8080/bairro/5
+
+### GET Buscar todos os Clientes
+GET http://localhost:8080/cliente
+
+### GET Buscar Clientes por Codigo
+GET http://localhost:8080/cliente/codigo/1
+
+### GET Buscar Clientes por Nome
+GET http://localhost:8080/cliente/nome/Cliente 02
+
+### POST Buscar Endereco por CEP
+POST http://localhost:8080/cliente/cep
+Content-Type: application/json
+Accept: application/json
+
+{
+  "cep": "78104970"
+}
+
+### POST Inserir Cliente
+POST http://localhost:8080/cliente
+Content-Type: application/json
+Accept: application/json
+
+{
+"nome": "Cliente Feliz",
+"rg": "412337265-6",
+"cpf": "223.699.5950-60",
+"telefone": "65 99999-9999",
+"logradouro": "Rua Pernambuco",
+"numero": "679",
+"pontoReferencia": "Rua Sem Saída",
+"bairro": {
+  "codigo": 1,
+  "nome": "Centro",
+  "custoEntrega": 8.0
+}
+}
+
+### POST Inserir Cliente buscando endereco pelo CEP
+POST http://localhost:8080/cliente
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nome": "Cliente CEP",
+  "rg": "41233773-6",
+  "cpf": "218.699.5950-61",
+  "telefone": "65 99999-9999",
+  "cep": "78104970",
+  "numero": "679",
+  "pontoReferencia": "Casa azul"
+}
+
+### PUT Alterar Cliente
+PUT http://localhost:8080/cliente
+Content-Type: application/json
+Accept: application/json
+
+{
+  "codigo": 1,
+  "nome": "Cliente Alegre",
+  "rg": "41233773-6",
+  "cpf": "218.699.5950-60",
+  "telefone": "65 99999-9999",
+  "cep": "78104970",
+  "logradouro": "Rua Paraná",
+  "numero": "679",
+  "pontoReferencia": "Próximo Igreja II",
+  "bairro": {
+    "codigo": 3,
+    "nome": "Jardim Mariana",
+    "custoEntrega": 8.0
+  }
+}
+
+### DELETE Excluir Cliente
+DELETE http://localhost:8080/cliente/4
+
+### GET Buscar todos Grupos Alimentar
+GET http://localhost:8080/grupoalimentar
+
+### GET Buscar Grupo Alimentar por ID
+GET http://localhost:8080/grupoalimentar/codigo/2
+
+### GET Buscar Grupo Alimentar por Nome
+GET http://localhost:8080/grupoalimentar/nome/carboidratos
+
+### POST Inserir Grupo Alimentar
+POST http://localhost:8080/grupoalimentar
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nome": "Frutos do Mar"
+}
+
+### PUT Alterar Grupo Alimentar
+PUT http://localhost:8080/grupoalimentar
+Content-Type: application/json
+Accept: application/json
+
+{
+  "codigo": 8,
+  "nome": "Peixes"
+}
+
+### DELETE Excluir Grupo Alimentar
+DELETE http://localhost:8080/grupoalimentar/7
+
+### GET Buscar Produto
+GET http://localhost:8080/produto
+
+### GET Buscar Produto por ID
+GET http://localhost:8080/produto/codigo/6
+
+### GET Buscar Produto por Nome
+GET http://localhost:8080/produto/nome/Arroz Branco
+
+### GET Buscar Produtos abaixo do Estoque Minimo
+GET http://localhost:8080/produto/estoqueminimo
+
+### POST Buscar Produto por Codigo de Barras no Open Food Facts
+POST http://localhost:8080/produto/codigobarras
+Content-Type: application/json
+Accept: application/json
+
+{
+  "codigoBarras": "3017620422003"
+}
+
+### POST Inserir Produto
+POST http://localhost:8080/produto
+Content-Type: application/json
+Accept: application/json
+
+{
+  "nome": "Abóbrora",
+  "custoUnidade": 3.99,
+  "valorEnergetico": 2900,
+  "estoque": 200,
+  "estoqueMinimo": 65,
+  "grupoAlimentar": {
+    "codigo": 2,
+    "nome": "Legumes"
+  }
+}
+
+### POST Inserir Produto buscando dados pelo Open Food Facts
+POST http://localhost:8080/produto
+Content-Type: application/json
+Accept: application/json
+
+{
+  "codigoBarras": "3017620422003",
+  "custoUnidade": 18.90,
+  "estoque": 20,
+  "estoqueMinimo": 5,
+  "grupoAlimentar": {
+    "codigo": 1,
+    "nome": "Carboidratos"
+  }
+}
+
+### PUT Alterar Produto
+PUT http://localhost:8080/produto
+Content-Type: application/json
+Accept: application/json
+
+{
+  "codigo": 8,
+  "nome": "File Mignon",
+  "custoUnidade": 59.90,
+  "valorEnergetico": 2500,
+  "estoque": 5000,
+  "estoqueMinimo": 100,
+  "grupoAlimentar": {
+    "codigo": 3,
+    "nome": "Proteinas"
+  }
+}
+
+### DELETE Excluir Produto
+DELETE http://localhost:8080/produto/10
+
+
+### GET Buscar Tipos de Movimento Estoque
+GET http://localhost:8080/movimento/tipos
+
+### GET Buscar Movimento Estoque por ID
+GET http://localhost:8080/movimento/codigo/1
+
+### GET Buscar Movimento Estoque por Tipo
+GET http://localhost:8080/movimento/tipo/COMPRA
+
+### GET Buscar Movimento Estoque por Tipo e Data
+GET http://localhost:8080/movimento/tipo/COMPRA/data/2026-05-08
+
+### POST Inserir Movimento Estoque
+POST http://localhost:8080/movimento
+Content-Type: application/json
+Accept: application/json
+
+{
+  "produto": {
+    "codigo": 5
+  },
+  "movimento": "COMPRA",
+  "data": "2026-05-08",
+  "quantidade": 25
+}
+
+### PUT Alterar Movimento Estoque
+PUT http://localhost:8080/movimento
+Content-Type: application/json
+Accept: application/json
+
+{
+  "codigo": 1,
+  "produto": {
+    "codigo": 5
+  },
+  "movimento": "COMPRA",
+  "data": "2026-05-08",
+  "quantidade": 150
+}
+
+### DELETE Excluir Movimento Estoque
+DELETE http://localhost:8080/movimento
+Content-Type: application/json
+Accept: application/json
+
+{
+  "codigo": 1,
+  "produto": {
+    "codigo": 5
+  },
+  "movimento": "COMPRA",
+  "data": "2026-05-08",
+  "quantidade": 150
+}
+
+### GET Buscar Registro Estoque por ID
+GET http://localhost:8080/registro/codigo/1
+
+### GET Buscar Registro Estoque por Movimento
+GET http://localhost:8080/registro/movimento/VENCIMENTO
+
+### GET Buscar Registro Estoque por Movimento e Data
+GET http://localhost:8080/registro/movimento/COMPRA/data/2026-05-08
+
+### POST Inserir Registro Estoque
+POST http://localhost:8080/registro
+Content-Type: application/json
+Accept: application/json
+
+{
+  "produto": {
+    "codigo": 6
+  },
+  "movimento": "COMPRA",
+  "data": "2026-05-08",
+  "quantidade": 40
+}
+
+### PUT Alterar Registro Estoque
+PUT http://localhost:8080/registro
+Content-Type: application/json
+Accept: application/json
+
+{
+  "codigo": 2,
+  "produto": {
+    "codigo": 1
+  },
+  "movimento": "VENCIMENTO",
+  "data": "2026-05-08",
+  "quantidade": 30
+}
+
+### DELETE Excluir Registro Estoque
+DELETE http://localhost:8080/registro
+Content-Type: application/json
+Accept: application/json
+
+{
+  "codigo": 2,
+  "produto": {
+    "codigo": 1
+  },
+  "movimento": "VENCIMENTO",
+  "data": "2026-05-08",
+  "quantidade": 30
+}
+
+### GET Relatorio Estoque Baixo
+GET http://localhost:8080/relatorio/estoque/baixo
+
+### GET Relatorio Saldo Geral de Estoque
+GET http://localhost:8080/relatorio/estoque/saldo
+
+### GET Relatorio Perdas por Periodo
+GET http://localhost:8080/relatorio/estoque/perdas?inicio=2026-05-01&fim=2026-05-31
+
+### GET Relatorio Saidas por Periodo
+GET http://localhost:8080/relatorio/estoque/saidas?inicio=2026-05-01&fim=2026-05-31
