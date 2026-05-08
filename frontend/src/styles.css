@@ -38,6 +38,40 @@ button {
   margin-bottom: 20px;
 }
 
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tab-button {
+  align-items: center;
+  background: #e9efeb;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: #223027;
+  display: inline-flex;
+  font-weight: 700;
+  gap: 10px;
+  min-height: 42px;
+  padding: 0 14px;
+}
+
+.tab-button.active {
+  background: #ffffff;
+  border-color: #1f7a4d;
+  color: #1f7a4d;
+}
+
+.tab-button span {
+  background: #d9e6de;
+  border-radius: 999px;
+  color: #425149;
+  min-width: 26px;
+  padding: 3px 8px;
+}
+
 .eyebrow {
   color: #5a6b62;
   font-size: 13px;
@@ -84,15 +118,22 @@ h2 {
   align-items: start;
 }
 
-.produto-form,
-.produto-list {
+.full-workspace {
+  display: grid;
+  gap: 20px;
+}
+
+.entity-form,
+.entity-list,
+.filter-bar,
+.metric-card {
   background: #ffffff;
   border: 1px solid #dce4df;
   border-radius: 8px;
   padding: 18px;
 }
 
-.produto-form {
+.entity-form {
   display: grid;
   gap: 14px;
 }
@@ -109,6 +150,47 @@ h2 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+}
+
+.input-action {
+  align-items: end;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+}
+
+.filter-bar {
+  align-items: end;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr)) auto;
+  gap: 12px;
+}
+
+.inline-filters {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) minmax(150px, 1fr) auto;
+  gap: 10px;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.metric-card {
+  display: grid;
+  gap: 6px;
+}
+
+.metric-card span {
+  color: #65756c;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.metric-card strong {
+  font-size: 24px;
 }
 
 label {
@@ -228,6 +310,16 @@ td small {
   font-weight: 700;
 }
 
+.status-badge {
+  background: #e9efeb;
+  border-radius: 999px;
+  color: #223027;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 8px;
+}
+
 .row-actions {
   display: flex;
   gap: 8px;
@@ -252,6 +344,12 @@ td small {
     flex-direction: column;
   }
 
+  .filter-bar,
+  .inline-filters,
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
   .list-header input {
     max-width: none;
   }
@@ -267,7 +365,15 @@ td small {
     font-size: 26px;
   }
 
+  .tabs {
+    flex-direction: column;
+  }
+
   .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .input-action {
     grid-template-columns: 1fr;
   }
 }
