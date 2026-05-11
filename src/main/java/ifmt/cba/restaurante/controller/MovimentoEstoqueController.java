@@ -70,4 +70,10 @@ public class MovimentoEstoqueController {
             throws NotFoundException, NotValidDataException {
         return registroEstoqueNegocio.excluir(registroEstoqueDTO);
     }
+
+    @DeleteMapping(value = "/{codigo}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public RegistroEstoqueDTO excluirMovimentoPorCodigo(@PathVariable("codigo") int codigo)
+            throws NotFoundException, NotValidDataException {
+        return registroEstoqueNegocio.excluir(codigo);
+    }
 }

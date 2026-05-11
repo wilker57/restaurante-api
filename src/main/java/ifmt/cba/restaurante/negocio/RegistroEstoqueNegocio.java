@@ -7,6 +7,7 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ifmt.cba.restaurante.dto.MovimentoEstoqueDTO;
 import ifmt.cba.restaurante.dto.RegistroEstoqueDTO;
@@ -32,6 +33,7 @@ public class RegistroEstoqueNegocio {
 		this.modelMapper = new ModelMapper();
 	}
 
+	@Transactional
 	public RegistroEstoqueDTO inserir(RegistroEstoqueDTO registroEstoqueDTO) throws NotValidDataException, NotFoundException {
 
 		RegistroEstoque registroEstoque = this.toEntity(registroEstoqueDTO);
@@ -53,6 +55,7 @@ public class RegistroEstoqueNegocio {
 		return this.toDTO(registroEstoque);
 	}
 
+	@Transactional
 	public RegistroEstoqueDTO alterar(RegistroEstoqueDTO registroEstoqueDTO) throws NotValidDataException, NotFoundException {
 
 		RegistroEstoque registroEstoque = this.toEntity(registroEstoqueDTO);
@@ -90,29 +93,29 @@ public class RegistroEstoqueNegocio {
 		return this.toDTO(registroEstoque);
 	}
 
+	@Transactional
 	public RegistroEstoqueDTO excluir(RegistroEstoqueDTO registroEstoqueDTO) throws NotValidDataException, NotFoundException {
-
-		RegistroEstoque registroEstoque = this.toEntity(registroEstoqueDTO);
-		String mensagemErros = registroEstoque.validar();
-
-		if (!mensagemErros.isEmpty()) {
-			throw new NotValidDataException(mensagemErros);
+		if (registroEstoqueDTO == null || registroEstoqueDTO.getCodigo() <= 0) {
+			throw new NotValidDataException("Codigo do registro de estoque invalido");
 		}
+		return this.excluir(registroEstoqueDTO.getCodigo());
+	}
 
+	@Transactional
+	public RegistroEstoqueDTO excluir(int codigo) throws NotValidDataException, NotFoundException {
 		try {
-			Produto produtoTemp = produtoRepository.findById(registroEstoque.getProduto().getCodigo()).get();
-			if(registroEstoque.getMovimento() == MovimentoEstoqueDTO.COMPRA){
-				produtoTemp.setEstoque(produtoTemp.getEstoque() - registroEstoque.getQuantidade());
-			}else{
-				produtoTemp.setEstoque(produtoTemp.getEstoque() + registroEstoque.getQuantidade());
-			}
-			
-			produtoRepository.save(produtoTemp);
-			registroEstoque = registroRepository.save(registroEstoque);
+			RegistroEstoque registroEstoque = registroRepository.findById(codigo)
+					.orElseThrow(() -> new NotFoundException("Nao existe esse registro de estoque"));
+
+			Produto produto = this.buscarProduto(registroEstoque.getProduto().getCodigo());
+			this.aplicarMovimentoEstoque(produto, registroEstoque.getMovimento(), registroEstoque.getQuantidade(), true);
+			registroRepository.delete(registroEstoque);
+			return this.toDTO(registroEstoque);
+		} catch (NotFoundException ex) {
+			throw ex;
 		} catch (Exception ex) {
-			throw new NotValidDataException("Erro ao incluir registro de estoque - " + ex.getMessage());
+			throw new NotValidDataException("Erro ao excluir registro de estoque - " + ex.getMessage());
 		}
-		return this.toDTO(registroEstoque);
 	}
 
 	public RegistroEstoqueDTO pesquisaCodigo(int codigo) throws NotFoundException {
@@ -170,7 +173,7 @@ public class RegistroEstoqueNegocio {
 	}
 
 	private Produto buscarProduto(int codigo) throws NotFoundException {
-		return produtoRepository.findById(codigo)
+		return produtoRepository.findByIdForUpdate(codigo)
 				.orElseThrow(() -> new NotFoundException("Nao existe esse produto"));
 	}
 
@@ -179,7 +182,11 @@ public class RegistroEstoqueNegocio {
 		if (desfazer) {
 			fator *= -1;
 		}
-		produto.setEstoque(produto.getEstoque() + (fator * quantidade));
+		int novoEstoque = produto.getEstoque() + (fator * quantidade);
+		if (novoEstoque < 0) {
+			throw new IllegalArgumentException("Movimento deixaria o estoque negativo para o produto " + produto.getNome());
+		}
+		produto.setEstoque(novoEstoque);
 		produtoRepository.save(produto);
 	}
 }

@@ -3,6 +3,7 @@ package ifmt.cba.restaurante;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ import ifmt.cba.restaurante.negocio.ProdutoNegocio;
 import ifmt.cba.restaurante.negocio.RegistroEstoqueNegocio;
 
 @Component
+@ConditionalOnProperty(name = "app.seed.enabled", havingValue = "true")
 public class GeradorBaseDados implements ApplicationListener<ApplicationStartedEvent> {
 
     @Autowired

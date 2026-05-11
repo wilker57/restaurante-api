@@ -28,8 +28,7 @@ export function salvarRegistroEstoque(registro: RegistroEstoqueDTO): Promise<Reg
 }
 
 export function excluirRegistroEstoque(registro: RegistroEstoqueDTO): Promise<RegistroEstoqueDTO> {
-  return request<RegistroEstoqueDTO>("/movimento", {
+  return request<RegistroEstoqueDTO>(`/movimento/${registro.codigo}`, {
     method: "DELETE",
-    body: JSON.stringify(registro),
   });
 }
